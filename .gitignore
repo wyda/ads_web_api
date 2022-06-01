@@ -1,1 +1,5 @@
 /venv
+/instance
+app.log
+ads/__pycache__
+flaskr/__pycache__

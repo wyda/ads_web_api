@@ -1,6 +1,6 @@
 import sys
 import os
-from . import app_config
+from ads import ads_config
 
 def get_root_dir():
     if getattr(sys, 'frozen', False):
@@ -9,4 +9,4 @@ def get_root_dir():
         return os.path.dirname(os.path.realpath(__file__))
 
 def load_config():
-    return app_config.AppConfig(get_root_dir()).load_config()
+    return ads_config.AppConfig(get_root_dir()).load_config()
