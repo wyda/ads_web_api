@@ -1,17 +1,20 @@
 import os
-
+import secrets
 from flask import Flask, jsonify, request
-from flask import g, current_app
+from flask import g, current_app, session
+#from flask_session import Session
 from ads.ads_client import AdsClient
 
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True)             
     app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )    
+        SESSION_TYPE = 'filesystem',
+        SECRET_KEY= secrets.token_urlsafe(32),
+        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),    
+    )           
+    #Session(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -24,14 +27,14 @@ def create_app(test_config=None):
     try:
         os.makedirs(app.instance_path)
     except OSError:
-        pass
+        pass    
 
     @app.route('/read_var/', methods=['GET'])
-    def ads():
-        ads = AdsClient()   
+    def ads():        
+        ads = AdsClient()         
         varnames = []                
         for arg in request.args:            
-            varnames.append(arg)                
-        return jsonify({"results": ads.plc.read_list_by_name(varnames)})        
+            varnames.append(arg)        
+        return jsonify({"results": ads.plc.read_list_by_name(varnames)})                
 
     return app

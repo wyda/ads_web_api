@@ -9,6 +9,6 @@ class AdsClient():
                             level=self.ads_config.log_level, 
                             format='%(asctime)s %(message)s')                
 
-        self.plc = pyads.Connection('10.2.129.32.1.1', self.ads_config.ads_port)
+        self.plc = pyads.Connection(self.ads_config.ams_address, self.ads_config.ads_port)
         self.plc.open()
         logging.info('ads client started')
