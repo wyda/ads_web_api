@@ -1,27 +1,26 @@
 from pathlib import Path
 import jsonpickle
 import logging
-
-class AppConfig():
-    def __init__(self, app_path):                
-        self.__file_name = '\\param.json'
+from flaskr.db import get_db, g
+#from flask import (
+#    Blueprint, flash, g, redirect, render_template, request, session, url_for
+#)
+class AdsConfig():
+    def __init__(self):                
         self.ads_port = 851
-        self.ams_address = ""    
-        self.app_path = app_path
-        self.log_level = logging.NOTSET                  
+        self.ams_address = ""            
+        self.log_level = logging.NOTSET                         
 
     def load_config(self):
-        try:                        
-            with open(Path(self.app_path + self.__file_name)) as paramFile:                                                                                           
-                return jsonpickle.decode(paramFile.read())
-        except Exception as e:            
-            logging.error ('No valid param file available! Creating empty parameter file...', e)
+        if not 'db' in g:
+            logging.info('loading db')
+            g.db = get_db()           
 
-            with open(Path(self.app_path + self.__file_name), 'w') as paramFile:   
-                paramFile.write(jsonpickle.encode(self))
-                logging.debug('...new parameter file created')
-            return self.load_config()           
+        config=g.db.execute(
+            'SELECT * FROM ads_config WHERE id = ?', (1,)
+        ).fetchone()        
 
-    def save_config(self):    
-        with open(Path(self.app_path + self.__file_name), 'w') as paramFile:   
-            paramFile.write(jsonpickle.encode(self))        
+        self.ads_port = config['port']
+        self.ams_address = config['ams_address']
+        self.log_level = config['log_level']
+        return self

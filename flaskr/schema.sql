@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS api_config;
+DROP TABLE IF EXISTS ads_config;
+
+CREATE TABLE api_config (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  allow_var_req INTEGER NOT NULL,
+  log_level INTEGER NOT NULL
+);
+
+CREATE TABLE ads_config (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  port INTEGER NOT NULL,
+  ams_address TEXT NOT NULL,
+  log_level INTEGER NOT NULL
+);
+
