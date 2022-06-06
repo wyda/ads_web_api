@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 from flask import g, current_app, session
 from flaskr.db import get_db
 from ads.ads_client import AdsClient
+from .config import AppConfig
 
 
 def create_app(test_config=None):
@@ -32,7 +33,7 @@ def create_app(test_config=None):
         pass    
 
     @app.route('/readvar/', methods=['GET'])
-    def ads():             
+    def readvar():             
         ads = AdsClient()    
         db = get_db()    
         api_config=db.execute(
@@ -45,6 +46,20 @@ def create_app(test_config=None):
             return jsonify(ads.plc.read_list_by_name(varnames))                
         else:
             return 'direct var access not allowed'
+
+    @app.route('/api/<d>')
+    def api(d):
+        config = AppConfig()        
+        api_config = config.load_api(r'flaskr\api.json')        
+        if d in api_config:
+            ads = AdsClient()
+            varnames=[]            
+            for val in api_config[d].values():
+                varnames.append(val['var'])
+            ads.plc.read_list_by_name(varnames)
+            results = ads.plc.read_list_by_name(varnames)
+            return jsonify(results)        
+        return d
     
     from . import db
     db.init_app(app)

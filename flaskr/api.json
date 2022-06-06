@@ -1,0 +1,12 @@
+{
+  "status": {
+    "unit_on": {
+      "var": "Main._uint",
+      "name": "Unit on"
+    },
+    "error": {
+      "var": "Main._bool",
+      "name": "Has error"
+    }
+  }
+}

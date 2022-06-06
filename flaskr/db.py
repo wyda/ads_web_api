@@ -22,8 +22,7 @@ def init_db():
 def reload_config():
     db = get_db()
     config = AppConfig()
-    config = config.load('flaskr\config.json')
-    
+    config = config.load('flaskr\config.json')   
     cur = db.cursor()
     # Insert a row of data    
     cur.execute("UPDATE ads_config SET port=?, ams_address=?, log_level=? WHERE id=1", (config.ams_port, config.ams_address, config.log_level))

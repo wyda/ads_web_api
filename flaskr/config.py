@@ -19,4 +19,11 @@ class AppConfig():
             with open(config_file, 'w') as paramFile:   
                 paramFile.write(jsonpickle.encode(self))
                 logging.debug('...new parameter file created')
-            return self.load(config_file)               
+            return self.load(config_file) 
+
+    def load_api(self, api_file):
+        try:                        
+            with open(api_file) as paramFile:                               
+                return jsonpickle.decode(paramFile.read())                           
+        except FileNotFoundError:            
+            logging.info('No valid param file available! Creating empty parameter file...')
