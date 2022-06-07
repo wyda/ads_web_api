@@ -1,10 +1,11 @@
 import os
 import secrets
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from flask import g, current_app, session
 from flaskr.db import get_db
 from ads.ads_client import AdsClient
 from .config import AppConfig
+from markupsafe import escape
 
 
 def create_app(test_config=None):
@@ -42,24 +43,24 @@ def create_app(test_config=None):
         if api_config['allow_var_req']:
             varnames = []                
             for arg in request.args:            
-                varnames.append(arg)        
+                varnames.append(escape(arg))        
             return jsonify(ads.plc.read_list_by_name(varnames))                
-        else:
-            return 'direct var access not allowed'
+        abort(403)
 
-    @app.route('/api/<d>')
-    def api(d):
+    @app.route('/api/<call>')
+    def api(call):
         config = AppConfig()        
+        call = escape(call)
         api_config = config.load_api(r'flaskr\api.json')        
-        if d in api_config:
+        if call in api_config:
             ads = AdsClient()
             varnames=[]            
-            for val in api_config[d].values():
+            for val in api_config[call].values():
                 varnames.append(val['var'])
             ads.plc.read_list_by_name(varnames)
             results = ads.plc.read_list_by_name(varnames)
             return jsonify(results)        
-        return d
+        return 'not found!'
     
     from . import db
     db.init_app(app)

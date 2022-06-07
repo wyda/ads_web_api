@@ -11,7 +11,7 @@ class AppConfig():
 
     def load(self, config_file):
         try:                        
-            with open(config_file) as paramFile:                               
+            with open(config_file, 'r') as paramFile:                               
                 return jsonpickle.decode(paramFile.read())                           
         except FileNotFoundError:            
             logging.info('No valid param file available! Creating empty parameter file...')
@@ -23,7 +23,7 @@ class AppConfig():
 
     def load_api(self, api_file):
         try:                        
-            with open(api_file) as paramFile:                               
+            with open(api_file, 'r') as paramFile:                               
                 return jsonpickle.decode(paramFile.read())                           
         except FileNotFoundError:            
             logging.info('No valid param file available! Creating empty parameter file...')
