@@ -7,7 +7,8 @@ class AppConfig():
         self.ams_port = 851
         self.ams_address = ""
         self.log_level = 0
-        self.allow_var_req = False               
+        self.allow_var_req = False   
+        self.omit_var_name = True            
 
     def load(self, config_file):
         try:                        

@@ -15,18 +15,18 @@ def init_db():
     cur = db.cursor()
     # Insert a row of data    
     cur.execute("INSERT INTO ads_config VALUES (?,?,?,?)", (1, config.ams_port, config.ams_address, config.log_level))
-    cur.execute("INSERT INTO api_config VALUES (?, ?, ?)", (1, config.allow_var_req, 0))
+    cur.execute("INSERT INTO api_config VALUES (?, ?, ?, ?)", (1, config.allow_var_req, config.omit_var_names, 0))
     # Save (commit) the changes
     db.commit()
 
 def reload_config():
     db = get_db()
     config = AppConfig()
-    config = config.load('flaskr\config.json')   
+    config = config.load('flaskr\config.json')
     cur = db.cursor()
-    # Insert a row of data    
+    # Insert a row of data
     cur.execute("UPDATE ads_config SET port=?, ams_address=?, log_level=? WHERE id=1", (config.ams_port, config.ams_address, config.log_level))
-    cur.execute("UPDATE api_config SET allow_var_req=? WHERE id=1", (config.allow_var_req,))
+    cur.execute("UPDATE api_config SET allow_var_req=?, omit_var_names=? WHERE id=1", (config.allow_var_req, config.omit_var_names))
     # Save (commit) the changes
     db.commit()
     

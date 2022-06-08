@@ -1,1 +1,1 @@
-{"py/object": "flaskr.config.AppConfig", "ams_port": 851, "ams_address": "10.2.129.32.1.1", "log_level": 10, "allow_var_req": true}
+{"py/object": "flaskr.config.AppConfig", "ams_port": 851, "ams_address": "10.2.129.32.1.1", "log_level": 10, "allow_var_req": true, "omit_var_names": true}

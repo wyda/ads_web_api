@@ -1,12 +1,26 @@
 {
   "status": {
     "unit_on": {
-      "var": "Main._uint",
-      "name": "Unit on"
+      "var": "Main.mb_UnitOn",
+      "lable": "Unit on",
+      "description": "True is unit is powered on"
     },
     "error": {
-      "var": "Main._bool",
-      "name": "Has error"
+      "var": "Main.mb_Error",
+      "lable": "Has error",
+      "description": "True if the unit is in error state"
     }
-  }
+  },
+  "maintenance": {
+    "hours": {
+      "var": "Main.mf_hours",
+      "lable": "Hours",
+      "description": "Machine working hours since last checkup"
+    },
+    "oil_change": {
+      "var": "Main.mb_change_oil",
+      "lable": "Oil change required",
+      "description": "True if gear box oil change is required"
+    }
+  }    
 }

@@ -1,12 +1,15 @@
 import os
 import secrets
 from flask import Flask, jsonify, request, abort
-from flask import g, current_app, session
+#from flask import g, current_app, session
 from flaskr.db import get_db
 from ads.ads_client import AdsClient
 from .config import AppConfig
+from .api import create_var_list, create_response, omit_apiinfo_var_name
 from markupsafe import escape
 
+ALLOW_VAR_REQ='allow_var_req'
+OMIT_VAR_NAMES='omit_var_names'
 
 def create_app(test_config=None):
     # create and configure the app
@@ -17,7 +20,6 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),    
     )
 
-   
     #Session(app)
 
     if test_config is None:
@@ -40,7 +42,7 @@ def create_app(test_config=None):
         api_config=db.execute(
             'SELECT * FROM api_config WHERE id = ?', (1,)
         ).fetchone()  
-        if api_config['allow_var_req']:
+        if api_config[ALLOW_VAR_REQ]:
             varnames = []                
             for arg in request.args:            
                 varnames.append(escape(arg))        
@@ -48,19 +50,29 @@ def create_app(test_config=None):
         abort(403)
 
     @app.route('/api/<call>')
-    def api(call):
+    def api(call):                
         config = AppConfig()        
         call = escape(call)
         api_config = config.load_api(r'flaskr\api.json')        
-        if call in api_config:
-            ads = AdsClient()
-            varnames=[]            
-            for val in api_config[call].values():
-                varnames.append(val['var'])
+        
+        if varnames := create_var_list(call, api_config, request):
+            ads = AdsClient()                        
             ads.plc.read_list_by_name(varnames)
-            results = ads.plc.read_list_by_name(varnames)
-            return jsonify(results)        
-        return 'not found!'
+            results = ads.plc.read_list_by_name(varnames)            
+            return jsonify(create_response(results, call, api_config))        
+        abort(404)
+    
+    @app.route('/apiinfo')
+    def apiinfo():        
+        config = AppConfig()                        
+        api_info = config.load_api(r'flaskr\api.json')              
+        db = get_db()   
+        api_config=db.execute(
+            'SELECT * FROM api_config WHERE id = ?', (1,)
+        ).fetchone() 
+        if api_config[OMIT_VAR_NAMES]:
+            return omit_apiinfo_var_name(api_info) 
+        return jsonify(api_info)
     
     from . import db
     db.init_app(app)

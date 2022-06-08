@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS ads_config;
 CREATE TABLE api_config (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   allow_var_req INTEGER NOT NULL,
+  omit_var_names INTEGER NOT NULL,
   log_level INTEGER NOT NULL
 );
 
