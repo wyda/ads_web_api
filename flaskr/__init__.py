@@ -51,13 +51,11 @@ def create_app(test_config=None):
 
     @app.route('/api/<call>')
     def api(call):                
-        config = AppConfig()        
-        call = escape(call)
+        config = AppConfig()                
         api_config = config.load_api(r'flaskr\api.json')        
         
         if varnames := create_var_list(call, api_config, request):
-            ads = AdsClient()                        
-            ads.plc.read_list_by_name(varnames)
+            ads = AdsClient()                                    
             results = ads.plc.read_list_by_name(varnames)            
             return jsonify(create_response(results, call, api_config))        
         abort(404)

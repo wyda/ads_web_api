@@ -21,6 +21,11 @@
       "var": "Main.mb_change_oil",
       "lable": "Oil change required",
       "description": "True if gear box oil change is required"
+    },
+    "counter": {
+      "var": "Main.counter",
+      "lable": "counting value",
+      "description": "Some counter"
     }
   }    
 }

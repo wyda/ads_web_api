@@ -27,4 +27,4 @@ class AppConfig():
             with open(api_file, 'r') as paramFile:                               
                 return jsonpickle.decode(paramFile.read())                           
         except FileNotFoundError:            
-            logging.info('No valid param file available! Creating empty parameter file...')
+            logging.info('No valid api file available!')            

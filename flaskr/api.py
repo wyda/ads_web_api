@@ -14,9 +14,10 @@ def create_var_list(call, api_config, request):
     return None
 
 def create_response(result, call, api_config):
-    response={}
-    for key, val in api_config[call].items():   
-        if resp := result.get(val['var']) != None:
+    response={}    
+    for key, val in api_config[call].items():                    
+        resp = result.get(val['var'])
+        if resp != None:                                    
             response[key] = resp
     return response
 
