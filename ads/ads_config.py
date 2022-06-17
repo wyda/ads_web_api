@@ -13,7 +13,7 @@ class AdsConfig():
 
     def load_config(self):
         if not 'db' in g:
-            logging.info('loading db')
+            logging.info('loading db in AdsConfig')
             g.db = get_db()           
 
         config=g.db.execute(
