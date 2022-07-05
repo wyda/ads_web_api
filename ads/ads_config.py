@@ -2,9 +2,6 @@ from pathlib import Path
 import jsonpickle
 import logging
 from flaskr.db import get_db, g
-#from flask import (
-#    Blueprint, flash, g, redirect, render_template, request, session, url_for
-#)
 class AdsConfig():
     def __init__(self):                
         self.ads_port = 851

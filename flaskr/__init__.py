@@ -13,8 +13,8 @@ ALLOW_VAR_REQ='allow_var_req'
 OMIT_VAR_NAMES='omit_var_names'
 
 logging.basicConfig(filename='app.log', encoding='utf-8', 
-                            level=10, 
-                            format='%(asctime)s %(message)s')         
+                    level=10, 
+                    format='%(asctime)s : %(levelname)s : %(name)s : %(message)s')         
 
 def create_app(test_config=None):
     # create and configure the app
@@ -36,7 +36,7 @@ def create_app(test_config=None):
     try:
         os.makedirs(app.instance_path)
     except OSError as e:
-        logging.error(e)        
+        logging.info('Folder for app instance already exists')        
 
     @app.route('/api/readvar')
     def readvar():             
@@ -69,7 +69,7 @@ def create_app(test_config=None):
                 abort(502, description=e)
         abort(404, description='api call "{}" not available!'.format(call))
     
-    @app.route('/apiinfo')
+    @app.route('/api/apiinfo')
     def apiinfo():        
         config = AppConfig()                        
         api_info = config.load_api(r'flaskr\api.json')              
