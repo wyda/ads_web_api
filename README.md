@@ -28,8 +28,8 @@ The API is defined by one or more calls of which each contains a number of data 
 
 ## Example requests
 ### Request request_1  
-localhost:5000/api/call_1  
-### Response request_1  
+localhost:5000/api/request_1  
+### Response
 ```
 {
   "data_access_point1": 132.32,
@@ -38,8 +38,8 @@ localhost:5000/api/call_1
 ```
 
 ### It's possible to request a single data point or a list of data points
- localhost:5000/api/call_1?data_access_point1  
-### Response request_1  
+ localhost:5000/api/request_1?data_access_point1  
+### Response 
 ```
 {
   "data_access_point1": 132.32,
@@ -48,7 +48,7 @@ localhost:5000/api/call_1
 
 ### Request the API description  
 localhost:5000/api/apiinfo  
-### Response API definition  
+### Response 
 The variable names are ommited in the response if "omit_var_names" is set to true in config.json  
 ```
 {
