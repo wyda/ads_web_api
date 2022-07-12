@@ -73,7 +73,7 @@ The variable names are ommited in the response if "omit_var_names" is set to tru
 ### Request values directly by PLC variable names
 This needs to be allowed in config.json by setting "allow_var_req" to true
 
-localhost:5000/api/readvar?Main.MyTestVar1+Main.MyTestVar2  
+localhost:5000/api/readvar?Main.MyTestVar1&Main.MyTestVar2  
 
 ### Response 
 ```

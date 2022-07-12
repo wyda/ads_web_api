@@ -8,6 +8,6 @@ class AdsClient():
         self.ads_config.load_config()                     
         logger = logging.getLogger('ads client')      
 
-        self.plc = pyads.Connection(self.ads_config.ams_address, self.ads_config.ads_port)
+        self.plc = pyads.Connection(self.ads_config.ams_address, self.ads_config.ams_port)
         self.plc.open()
         logger.info('ads client started')

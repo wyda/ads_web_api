@@ -3,7 +3,7 @@ import secrets
 import logging
 from flask import Flask, jsonify, request, abort
 #from flask import g, current_app, session
-from flaskr.db import get_db
+from ads_web_api.db import get_db
 from ads.ads_client import AdsClient
 from .config import AppConfig
 from .api import create_var_list, create_response, omit_apiinfo_var_name
@@ -22,7 +22,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SESSION_TYPE = 'filesystem',
         SECRET_KEY= secrets.token_urlsafe(32),        
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),    
+        DATABASE=os.path.join(app.instance_path, 'ads_web_api.sqlite'),    
     )    
 
     if test_config is None:
@@ -58,7 +58,7 @@ def create_app(test_config=None):
     @app.route('/api/<call>')
     def api(call):                
         config = AppConfig()                
-        api_config = config.load_api(r'flaskr\api.json')        
+        api_config = config.load_api(r'ads_web_api\api.json')        
         
         if varnames := create_var_list(call, api_config, request):
             ads = AdsClient()                                    
@@ -72,7 +72,7 @@ def create_app(test_config=None):
     @app.route('/api/apiinfo')
     def apiinfo():        
         config = AppConfig()                        
-        api_info = config.load_api(r'flaskr\api.json')              
+        api_info = config.load_api(r'ads_web_api\api.json')              
         db = get_db()   
         api_config=db.execute(
             'SELECT * FROM api_config WHERE id = ?', (1,)

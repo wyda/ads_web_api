@@ -2,6 +2,6 @@
 /instance
 app.log
 ads/__pycache__
-flaskr/__pycache__
+ads_web_api/__pycache__
 tests/__pycache__
 .coverage

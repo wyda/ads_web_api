@@ -17,10 +17,10 @@
       "lable": "Hours",
       "description": "Machine working hours since last checkup"
     },
-    "oil_change": {
-      "var": "Main.mb_change_oil",
-      "lable": "Oil change required",
-      "description": "True if gear box oil change is required"
+    "temperature": {
+      "var": "Main.mf_temperature",
+      "lable": "Temperature",
+      "description": "Control cabinet temperature"
     },
     "counter": {
       "var": "Main.counter",

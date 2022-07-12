@@ -3,30 +3,30 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 
-from flaskr.config import AppConfig
+from ads_web_api.config import AppConfig
 
 def init_db():
     db = get_db()
     config = AppConfig()
-    config = config.load('flaskr\config.json')
+    config = config.load('ads_web_api\config.json')
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
     
     cur = db.cursor()
     # Insert a row of data    
-    cur.execute("INSERT INTO ads_config VALUES (?,?,?,?)", (1, config.ams_port, config.ams_address, config.log_level))
-    cur.execute("INSERT INTO api_config VALUES (?, ?, ?, ?)", (1, config.allow_var_req, config.omit_var_names, 0))
+    cur.execute("INSERT INTO ads_config VALUES (?,?,?,?)", (1, config['ams_port'], config['ams_address'], config['log_level']))
+    cur.execute("INSERT INTO api_config VALUES (?, ?, ?, ?)", (1, config['allow_var_req'], config['omit_var_names'], 0))
     # Save (commit) the changes
     db.commit()
 
 def reload_config():
     db = get_db()
     config = AppConfig()
-    config = config.load('flaskr\config.json')
+    config = config.load('ads_web_api\config.json')
     cur = db.cursor()
     # Insert a row of data
-    cur.execute("UPDATE ads_config SET port=?, ams_address=?, log_level=? WHERE id=1", (config.ams_port, config.ams_address, config.log_level))
-    cur.execute("UPDATE api_config SET allow_var_req=?, omit_var_names=? WHERE id=1", (config.allow_var_req, config.omit_var_names))
+    cur.execute("UPDATE ads_config SET port=?, ams_address=?, log_level=? WHERE id=1", (config['ams_port'], config['ams_address'], config['log_level']))
+    cur.execute("UPDATE api_config SET allow_var_req=?, omit_var_names=? WHERE id=1", (config['allow_var_req'], config['omit_var_names']))
     # Save (commit) the changes
     db.commit()
     
