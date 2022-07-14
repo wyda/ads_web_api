@@ -9,13 +9,13 @@ class AdsConfig():
         self.log_level = logging.NOTSET                         
 
     def load_config(self):
-        if not 'db' in g:
-            logging.info('loading db in AdsConfig')
-            g.db = get_db()           
-
-        config=g.db.execute(
+        logger = logging.getLogger('ads config')
+        logger.debug('get db')
+        db = get_db()
+        logger.debug('load ads config from db')
+        config=db.execute(
             'SELECT * FROM ads_config WHERE id = ?', (1,)
-        ).fetchone()        
+        ).fetchone()
 
         self.ams_port = config['port']
         self.ams_address = config['ams_address']

@@ -11,20 +11,25 @@ class AppConfig():
         self.omit_var_name = True            
 
     def load(self, config_file):
+        logger = logging.getLogger('AppConfig')
+
         try:                        
             with open(config_file, 'r') as paramFile:                               
                 return jsonpickle.decode(paramFile.read())                           
         except FileNotFoundError:            
-            logging.info('No valid param file available! Creating empty parameter file...')
+            logger.warning('No valid param file available! Creating empty parameter file...')
 
             with open(config_file, 'w') as paramFile:   
                 paramFile.write(jsonpickle.encode(self))
-                logging.debug('...new parameter file created')
+                logger.debug('...new parameter file created')        
+            logger.debug('return empty parameter file!')    
             return self.load(config_file) 
 
     def load_api(self, api_file):
+        logger = logging.getLogger('AppConfig')        
         try:                        
+            logger.info(api_file)
             with open(api_file, 'r') as paramFile:                               
                 return jsonpickle.decode(paramFile.read())                           
         except FileNotFoundError:            
-            logging.info('No valid api file available!')            
+            logger.error('No valid api file available!')            

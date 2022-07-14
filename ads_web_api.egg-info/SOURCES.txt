@@ -1,0 +1,12 @@
+README.md
+setup.py
+ads_web_api/__init__.py
+ads_web_api/api.py
+ads_web_api/app_config.py
+ads_web_api/db.py
+ads_web_api.egg-info/PKG-INFO
+ads_web_api.egg-info/SOURCES.txt
+ads_web_api.egg-info/dependency_links.txt
+ads_web_api.egg-info/not-zip-safe
+ads_web_api.egg-info/requires.txt
+ads_web_api.egg-info/top_level.txt
