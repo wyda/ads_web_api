@@ -1,6 +1,8 @@
 README.md
 setup.py
 ads_web_api/__init__.py
+ads_web_api/ads_client.py
+ads_web_api/ads_config.py
 ads_web_api/api.py
 ads_web_api/app_config.py
 ads_web_api/db.py

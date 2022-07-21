@@ -1,7 +1,6 @@
 from pathlib import Path
-import jsonpickle
 import logging
-from ads_web_api.db import get_db, g
+from ads_web_api.db import get_db
 class AdsConfig():
     def __init__(self):                
         self.ams_port = 851

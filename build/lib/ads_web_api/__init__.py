@@ -4,7 +4,7 @@ import logging
 from flask import Flask, jsonify, request, abort
 #from flask import g, current_app, session
 from ads_web_api.db import get_db
-from ads.ads_client import AdsClient
+from .ads_client import AdsClient
 from .app_config import AppConfig
 from .api import create_var_list, create_response, omit_apiinfo_var_name
 from markupsafe import escape
