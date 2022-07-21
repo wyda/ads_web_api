@@ -31,5 +31,9 @@ class AppConfig():
             logger.info(api_file)
             with open(api_file, 'r') as paramFile:                               
                 return jsonpickle.decode(paramFile.read())                           
-        except FileNotFoundError:            
-            logger.error('No valid api file available!')            
+        except FileNotFoundError:
+            logger.error('No valid api file available!')
+            with open(api_file, 'w') as api_file:       
+                logger.debug('...new empty api file created')
+            logger.debug('return empty api file!')
+            raise Exception("No valid api description found!")

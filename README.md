@@ -82,3 +82,10 @@ localhost:5000/api/readvar?Main.MyTestVar1&Main.MyTestVar2
   "Main.MyTestVar2": true,
 }
 ```
+
+## Deploing  
+### Test setup  
+...  
+  
+### Production setup  
+...  

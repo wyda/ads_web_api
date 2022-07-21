@@ -11,7 +11,7 @@ from markupsafe import escape
 
 ALLOW_VAR_REQ='allow_var_req'
 OMIT_VAR_NAMES='omit_var_names'
-API_FILE_PATH=r'ads_web_api\api.json'
+API_FILE_PATH=r'api.json'
 
 logging.basicConfig(filename='app.log', encoding='utf-8', 
                     level=10, 
@@ -34,11 +34,11 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
 
     # ensure the instance folder exists
-    try:
+    try:        
         os.makedirs(app.instance_path)
     except OSError as e:
         logging.info('Folder for app instance already exists')        
-        logging.info(app.instance_path)
+        logging.info(app.instance_path)   
 
     @app.route('/api/readvar')
     def readvar():             
@@ -59,9 +59,13 @@ def create_app(test_config=None):
 
     @app.route('/api/<call>')
     def api(call):                
-        config = AppConfig()                
-        api_config = config.load_api(API_FILE_PATH)        
-        
+        config = AppConfig()         
+        try:       
+            api_config = config.load_api(API_FILE_PATH)        
+        except Exception as e:
+            logging.error("No valid API description!")
+            abort(404, description='No API description available!')
+
         if varnames := create_var_list(call, api_config, request):
             ads = AdsClient()                                    
             try:
@@ -74,7 +78,12 @@ def create_app(test_config=None):
     @app.route('/api/apiinfo')
     def apiinfo():        
         logging.info("app.instance_path")
-        api_info = AppConfig().load_api(API_FILE_PATH)                      
+        try:
+            api_info = AppConfig().load_api(API_FILE_PATH)                      
+        except Exception as e:
+            logging.error("No valid API description!")
+            abort(404, description='No API description available!')
+
         db = get_db()   
         api_config=db.execute(
             'SELECT * FROM api_config WHERE id = ?', (1,)
