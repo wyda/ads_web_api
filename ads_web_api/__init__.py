@@ -105,6 +105,6 @@ def create_app(test_config=None):
 
     @app.errorhandler(502)
     def resource_not_found(e):
-        return jsonify(error=str(e)), 502
+        return jsonify(error=str(e)), 502  
 
     return app
