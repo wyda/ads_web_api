@@ -14,7 +14,7 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
     
     cur = db.cursor()     
-    if type(config) == dict: #ToDo Why is the config not allways form type AppConfig after laoding with jsonpickle?
+    if type(config) == dict: #ToDo Why is the config not allways type AppConfig after laoding with jsonpickle?
         cur.execute("INSERT INTO ads_config VALUES (?,?,?,?)", (1, config['ams_port'], config['ams_address'], config['log_level']))
         cur.execute("INSERT INTO api_config VALUES (?, ?, ?, ?)", (1, config['allow_var_req'], config['omit_var_names'], 0))    
     else:
@@ -26,7 +26,7 @@ def reload_config():
     db = get_db()
     config = AppConfig().load(CONFIG_FILE_PATH)    
     cur = db.cursor()    
-    if type(config) == dict: #ToDo Why is the config not allways form type AppConfig after laoding with jsonpickle?
+    if type(config) == dict: #ToDo Why is the config not allways type AppConfig after laoding with jsonpickle?
         cur.execute("UPDATE ads_config SET port=?, ams_address=?, log_level=? WHERE id=1", (config['ams_port'], config['ams_address'], config['log_level']))
         cur.execute("UPDATE api_config SET allow_var_req=?, omit_var_names=? WHERE id=1", (config['allow_var_req'], config['omit_var_names']))    
     else:

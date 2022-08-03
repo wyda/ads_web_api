@@ -3,9 +3,14 @@
 Simple web API interface build with [flask](https://flask.palletsprojects.com/en/2.1.x/) to give access to data on a Beckhoff PLC.  
 The whole API interface can be descriped in a single text file.  
 Option to read directly by PLC variable name.  
+  
+For reading the PLC data [pyads](https://github.com/stlehmann/pyads) is used.  
+  
+This project was started to learn a bit about flask and is work in progress.  
 
+## API definition structure  
 The API is defined by one or more calls of which each contains a number of data request points.  
-## API definition structure
+
 ```
 {
   "request_1": {
@@ -91,7 +96,7 @@ $env:FLASK_APP='ads_web_api'
 $env:FLASK_ENV='development'  
 flask run  
 
-You should now be able to query informaiton according your api devinition from your local machine. 
+You should now be able to query information according your api devinition from your local machine. 
 The PLC must run on the same PC.
 
 See also development server on the [flask homepage](https://flask.palletsprojects.com/en/2.1.x/server/) for more information.

@@ -2,9 +2,9 @@ from pathlib import Path
 import logging
 from ads_web_api.db import get_db
 class AdsConfig():
-    def __init__(self):                
+    def __init__(self):          
         self.ams_port = 851
-        self.ams_address = ""            
+        self.ams_address = ""
         self.log_level = logging.NOTSET                         
 
     def load_config(self):

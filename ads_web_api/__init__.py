@@ -51,7 +51,7 @@ def create_app(test_config=None):
             varnames = []
             for arg in request.args:            
                 varnames.append(escape(arg)) 
-            try:       
+            try:
                 return jsonify(ads.plc.read_list_by_name(varnames))                
             except Exception as e:
                 abort(502, description=e)
@@ -76,8 +76,7 @@ def create_app(test_config=None):
         abort(404, description='api call "{}" not available!'.format(call))
     
     @app.route('/api/apiinfo')
-    def apiinfo():        
-        logging.info("app.instance_path")
+    def apiinfo():                
         try:
             api_info = AppConfig().load_api(API_FILE_PATH)                      
         except Exception as e:

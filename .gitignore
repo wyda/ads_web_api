@@ -6,3 +6,4 @@ ads_web_api/__pycache__
 tests/__pycache__
 .coverage
 /build
+/ads_web_api.egg-info
