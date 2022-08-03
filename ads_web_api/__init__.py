@@ -1,8 +1,7 @@
 import os
 import secrets
 import logging
-from flask import Flask, jsonify, request, abort
-#from flask import g, current_app, session
+from flask import Flask, current_app, jsonify, request, abort
 from ads_web_api.db import get_db
 from .ads_client import AdsClient
 from .app_config import AppConfig
@@ -23,8 +22,8 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SESSION_TYPE = 'filesystem',
         SECRET_KEY= secrets.token_urlsafe(32),        
-        DATABASE=os.path.join(app.instance_path, 'ads_web_api.sqlite'),    
-    )        
+        DATABASE=os.path.join(app.instance_path, 'ads_web_api.sqlite'),
+    )       
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -37,8 +36,8 @@ def create_app(test_config=None):
     try:        
         os.makedirs(app.instance_path)
     except OSError as e:
-        logging.info('Folder for app instance already exists')        
-        logging.info(app.instance_path)   
+        logging.debug('Folder for app instance already exists')  
+        logging.debug(app.instance_path)   
 
     @app.route('/api/readvar')
     def readvar():             
@@ -66,12 +65,12 @@ def create_app(test_config=None):
             logging.error("No valid API description!")
             abort(404, description='No API description available!')
 
-        if varnames := create_var_list(call, api_config, request):
-            ads = AdsClient()                                    
+        if varnames := create_var_list(call, api_config, request):                                            
             try:
+                ads = AdsClient()    
                 results = ads.plc.read_list_by_name(varnames)            
-                return jsonify(create_response(results, call, api_config))        
-            except Exception as e:                            
+                return jsonify(create_response(results, call, api_config))
+            except Exception as e:
                 abort(502, description=e)
         abort(404, description='api call "{}" not available!'.format(call))
     
@@ -83,8 +82,8 @@ def create_app(test_config=None):
             logging.error("No valid API description!")
             abort(404, description='No API description available!')
 
-        db = get_db()   
-        api_config=db.execute(
+        db = get_db()           
+        api_config = db.execute(
             'SELECT * FROM api_config WHERE id = ?', (1,)
         ).fetchone() 
         if api_config[OMIT_VAR_NAMES]:
@@ -93,6 +92,9 @@ def create_app(test_config=None):
     
     from . import db
     db.init_app(app)
+
+    from . import app_config
+    app_config.init_app(app)
 
     @app.errorhandler(403)
     def resource_not_found(e):

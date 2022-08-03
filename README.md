@@ -1,6 +1,6 @@
 # ads_web_api
 
-Simple web API interface build with [flask](https://flask.palletsprojects.com/en/2.1.x/) to give access to data on a Beckhoff PLC.  
+Simple web API interface build with [flask](https://flask.palletsprojects.com/en/2.2.x/) to give access to data on a Beckhoff PLC.  
 The whole API interface can be descriped in a single text file.  
 Option to read directly by PLC variable name.  
   
@@ -89,16 +89,18 @@ localhost:5000/api/readvar?Main.MyTestVar1&Main.MyTestVar2
 ```
 
 ## Deploing  
-Before deployng to production you should definitly checkout [flask home page](https://flask.palletsprojects.com/en/2.1.x/deploying/)  
+Before deployng checkout [flask home page](https://flask.palletsprojects.com/en/2.2.x/deploying/)  
 ### Test setup  
-To run the app for testing in development mode run the following commands (PowerShell) after navigating to the ads_web_api project folder.  
+To run the app in local development mode run the following commands (PowerShell):
+git clone https://github.com/wyda/ads_web_api.git  
+pip install ads_web_api -r requirements.txt  
 $env:FLASK_APP='ads_web_api'  
 $env:FLASK_ENV='development'  
 flask run  
 
-You should now be able to query information according your api devinition from your local machine. 
-The PLC must run on the same PC.
-
-See also development server on the [flask homepage](https://flask.palletsprojects.com/en/2.1.x/server/) for more information.
+You should now be able to query information according your api devinition from your local machine.   
+The PLC must run on the same PC.  
+  
+See also development server on the [flask homepage](https://flask.palletsprojects.com/en/2.2.x/server/) for more information.  
 ### Production setup  
 ...  

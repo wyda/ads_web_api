@@ -1,3 +1,4 @@
+import os
 import sqlite3
 import click
 from flask import current_app, g
@@ -9,7 +10,8 @@ CONFIG_FILE_PATH=r'config.json'
 
 def init_db():
     db = get_db()
-    config = AppConfig().load(CONFIG_FILE_PATH)    
+    path = os.path.join(current_app.instance_path, CONFIG_FILE_PATH)
+    config = AppConfig().load(path)    
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
     
@@ -24,7 +26,8 @@ def init_db():
 
 def reload_config():
     db = get_db()
-    config = AppConfig().load(CONFIG_FILE_PATH)    
+    path = os.path.join(current_app.instance_path, CONFIG_FILE_PATH)
+    config = AppConfig().load(path)    
     cur = db.cursor()    
     if type(config) == dict: #ToDo Why is the config not allways type AppConfig after laoding with jsonpickle?
         cur.execute("UPDATE ads_config SET port=?, ams_address=?, log_level=? WHERE id=1", (config['ams_port'], config['ams_address'], config['log_level']))
@@ -33,7 +36,7 @@ def reload_config():
         cur.execute("UPDATE ads_config SET port=?, ams_address=?, log_level=? WHERE id=1", (config.ams_port, config.ams_address, config.log_level))
         cur.execute("UPDATE api_config SET allow_var_req=?, omit_var_names=? WHERE id=1", (config.allow_var_req, config.omit_var_name))    
     db.commit()
-    
+
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
@@ -47,7 +50,6 @@ def reload_config_command():
     """Load config.json to database"""
     reload_config()
     click.echo('Load config.json to db')
-
 
 def init_app(app):
     app.teardown_appcontext(close_db)
