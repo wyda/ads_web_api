@@ -31,7 +31,7 @@ class AppConfig():
         except FileNotFoundError:            
             logger.warning('No valid param file available! Creating empty parameter file...')            
             logger.info('return empty parameter file!')    
-            self.create_config(self, file_path)
+            self.create_config(file_path)
             return self.load(file_path)
 
     def create_api(self, file_path):

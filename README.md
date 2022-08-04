@@ -5,8 +5,6 @@ The whole API interface can be descriped in a single text file.
 Option to read directly by PLC variable name.  
   
 For reading the PLC data [pyads](https://github.com/stlehmann/pyads) is used.  
-  
-This project was started to learn a bit about flask and is work in progress.  
 
 ## API definition structure  
 The API is defined by one or more calls of which each contains a number of data request points.  
@@ -91,12 +89,12 @@ localhost:5000/api/readvar?Main.MyTestVar1&Main.MyTestVar2
 ## Deploing  
 Before deployng checkout [flask home page](https://flask.palletsprojects.com/en/2.2.x/deploying/)  
 ### Test setup  
-To run the app in local development mode run the following commands (PowerShell):
-git clone https://github.com/wyda/ads_web_api.git  
-pip install ads_web_api -r requirements.txt  
-$env:FLASK_APP='ads_web_api'  
-$env:FLASK_ENV='development'  
-flask run  
+To run the app in local development mode run the following commands (PowerShell):  
+* git clone https://github.com/wyda/ads_web_api.git  
+* pip install ads_web_api -r requirements.txt  
+* $env:FLASK_APP='ads_web_api'  
+* $env:FLASK_ENV='development'  
+* flask run  
 
 You should now be able to query information according your api devinition from your local machine.   
 The PLC must run on the same PC.  
