@@ -29,10 +29,10 @@ The API is defined by one or more calls of which each contains a number of data 
 }
 ```
 
-## Example requests
+## Example requests  
 ### Request request_1  
 localhost:5000/api/request_1  
-### Response
+### Response  
 ```
 {
   "data_access_point1": 132.32,
@@ -89,15 +89,20 @@ localhost:5000/api/readvar?Main.MyTestVar1&Main.MyTestVar2
 ## Deploing  
 Before deployng checkout [flask home page](https://flask.palletsprojects.com/en/2.2.x/deploying/)  
 ### Test setup  
-To run the app in local development mode run the following commands (PowerShell):  
+To run the app for the first time in local development mode run the following commands (PowerShell):  
 * git clone https://github.com/wyda/ads_web_api.git  
 * pip install ads_web_api -r requirements.txt  
 * $env:FLASK_APP='ads_web_api'  
 * $env:FLASK_ENV='development'  
+* flask create_config -> enter ams address to the created config file (instance folder)   
+* flask create_api -> write your API definition to the created file (instance folder)  
+* flask init-db  
 * flask run  
-
+  
 You should now be able to query information according your api devinition from your local machine.   
 The PLC must run on the same PC.  
+  
+If you change values in the config.json file run "flask reload-config" to the load the changes to the db.  
   
 See also development server on the [flask homepage](https://flask.palletsprojects.com/en/2.2.x/server/) for more information.  
 ### Production setup  
