@@ -10,7 +10,7 @@ from markupsafe import escape
 
 ALLOW_VAR_REQ='allow_var_req'
 OMIT_VAR_NAMES='omit_var_names'
-API_FILE_PATH=r'api.json'
+API_FILE_NAME='api.json'
 
 logging.basicConfig(filename='app.log', encoding='utf-8', 
                     level=10, 
@@ -60,7 +60,8 @@ def create_app(test_config=None):
     def api(call):                
         config = AppConfig()         
         try:       
-            api_config = config.load_api(API_FILE_PATH)        
+            path = os.path.join(current_app.instance_path, API_FILE_NAME)
+            api_config = config.load_api(path)        
         except Exception as e:
             logging.error("No valid API description!")
             abort(404, description='No API description available!')
@@ -77,7 +78,8 @@ def create_app(test_config=None):
     @app.route('/api/apiinfo')
     def apiinfo():                
         try:
-            api_info = AppConfig().load_api(API_FILE_PATH)                      
+            path = os.path.join(current_app.instance_path, API_FILE_NAME)
+            api_info = AppConfig().load_api(path)
         except Exception as e:
             logging.error("No valid API description!")
             abort(404, description='No API description available!')

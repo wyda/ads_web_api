@@ -48,9 +48,8 @@ class AppConfig():
                 return jsonpickle.decode(f.read())                           
         except FileNotFoundError:            
             logger.error('No valid api file available!')
-            with current_app.open_resource(file_path, 'w') as f:                                
-                logger.info('...new empty api file created')
-            logger.info('return empty api file (api.json)! Add API description to this file!')
+            self.create_api(file_path)
+            logger.info('...new empty api file created')
             raise Exception("No valid api description found!")
 
 def create_config():
