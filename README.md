@@ -101,9 +101,11 @@ To run the app for the first time in local development mode run the following co
   
 You should now be able to query information according your api devinition from your local machine.   
 The PLC must run on the same PC.  
+If you change values in the config.json file run "flask reload-config" to load the changes to the db.  
   
-If you change values in the config.json file run "flask reload-config" to the load the changes to the db.  
-  
+To access the server from an external device (testing only!):  
+* flask --host "your ip" run  
+
 See also development server on the [flask homepage](https://flask.palletsprojects.com/en/2.2.x/server/) for more information.  
 ### Production setup  
 ...  
